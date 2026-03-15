@@ -10,6 +10,8 @@ const navOverlay = document.querySelector("[data-nav-overlay]");
 const navDrawer = document.getElementById("nav-drawer");
 const desktopNavLinks = document.querySelector(".nav-links");
 const drawerNavLinks = document.querySelector("[data-nav-drawer-links]");
+const modal = document.getElementById("contact-modal");
+const modalOpeners = Array.from(document.querySelectorAll("[data-modal-open]"));
 
 if (desktopNavLinks && drawerNavLinks) {
     const fragment = document.createDocumentFragment();
@@ -99,6 +101,15 @@ const getDrawerFocusable = () => {
     });
 };
 
+const getModalFocusable = () => {
+    if (!modal) return [];
+    const selector = "a[href], button:not([disabled]), [tabindex]:not([tabindex=\"-1\"])";
+    return Array.from(modal.querySelectorAll(selector)).filter((el) => {
+        const style = window.getComputedStyle(el);
+        return style.visibility !== "hidden" && style.display !== "none";
+    });
+};
+
 if (navToggle && navOverlay && navDrawer) {
     navToggle.addEventListener("click", toggleNav);
     navOverlay.addEventListener("click", closeNav);
@@ -141,6 +152,76 @@ if (navToggle && navOverlay && navDrawer) {
             if (e.matches) closeNav();
         });
     }
+}
+
+let modalLastFocus = null;
+const isModalOpen = () => modal?.classList.contains("is-open");
+
+const closeModal = () => {
+    if (!modal) return;
+    if (!isModalOpen()) return;
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.documentElement.classList.remove("modal-open");
+    document.body.classList.remove("modal-open");
+    if (modalLastFocus && modalLastFocus.focus) modalLastFocus.focus();
+    modalLastFocus = null;
+};
+
+const openModal = (id) => {
+    if (!modal || modal.id !== id) return;
+    if (isNavOpen()) closeNav();
+    modalLastFocus = document.activeElement;
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.documentElement.classList.add("modal-open");
+    document.body.classList.add("modal-open");
+    const focusables = getModalFocusable();
+    if (focusables.length) focusables[0].focus();
+};
+
+for (const opener of modalOpeners) {
+    opener.addEventListener("click", () => {
+        const target = opener.getAttribute("data-modal-open");
+        openModal(target);
+    });
+}
+
+if (modal) {
+    const modalCloseEls = Array.from(modal.querySelectorAll("[data-modal-close]"));
+    const modalOverlay = modal.querySelector(".modal__overlay");
+
+    for (const btn of modalCloseEls) btn.addEventListener("click", closeModal);
+    if (modalOverlay) modalOverlay.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (event) => {
+        if (!isModalOpen()) return;
+
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closeModal();
+            return;
+        }
+
+        if (event.key !== "Tab") return;
+        const focusables = getModalFocusable();
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement;
+
+        if (event.shiftKey) {
+            if (active === first || !modal.contains(active)) {
+                event.preventDefault();
+                last.focus();
+            }
+        } else {
+            if (active === last || !modal.contains(active)) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
+    });
 }
 
 const revealEls = Array.from(document.querySelectorAll(".reveal"));
@@ -210,4 +291,24 @@ if ("IntersectionObserver" in window && navLinks.length && sections.length) {
     );
 
     for (const section of sections) observer.observe(section);
+}
+
+// Hero parallax / physics hover
+const heroCard = document.querySelector(".media-card");
+if (heroCard && !prefersReducedMotion) {
+    const setTilt = (x, y) => {
+        heroCard.style.setProperty("--tiltX", `${y * -8}deg`);
+        heroCard.style.setProperty("--tiltY", `${x * 10}deg`);
+        heroCard.style.setProperty("--parallaxX", `${x * 16}px`);
+        heroCard.style.setProperty("--parallaxY", `${y * 16}px`);
+    };
+
+    heroCard.addEventListener("pointermove", (event) => {
+        const rect = heroCard.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        setTilt(x, y);
+    });
+
+    heroCard.addEventListener("pointerleave", () => setTilt(0, 0));
 }
