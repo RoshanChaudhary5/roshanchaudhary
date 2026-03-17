@@ -11,20 +11,25 @@ const navDrawer = document.getElementById("nav-drawer");
 const desktopNavLinks = document.querySelector(".nav-links");
 const drawerNavLinks = document.querySelector("[data-nav-drawer-links]");
 const modal = document.getElementById("contact-modal");
-const modalOpeners = Array.from(document.querySelectorAll("[data-modal-open]"));
+let modalOpeners = Array.from(document.querySelectorAll("[data-modal-open]"));
+
+window.addEventListener("DOMContentLoaded", () => {
+    document.documentElement.classList.add("is-loaded");
+});
 
 if (desktopNavLinks && drawerNavLinks) {
     const fragment = document.createDocumentFragment();
-    for (const link of desktopNavLinks.querySelectorAll("a[href^=\"#\"]")) {
+    for (const link of desktopNavLinks.querySelectorAll("a[href^=\"#\"], button[data-modal-open]")) {
         const clone = link.cloneNode(true);
         clone.setAttribute("data-nav-close", "");
         fragment.appendChild(clone);
     }
     drawerNavLinks.replaceChildren(fragment);
+    modalOpeners = Array.from(document.querySelectorAll("[data-modal-open]"));
 }
 
 const navLinks = Array.from(document.querySelectorAll(".nav-link[href^=\"#\"]"));
-const navCloseEls = Array.from(document.querySelectorAll("[data-nav-close]"));
+let navCloseEls = Array.from(document.querySelectorAll("[data-nav-close]"));
 const sections = Array.from(document.querySelectorAll("main section[id]"));
 
 const setActive = (id) => {
@@ -304,6 +309,7 @@ if (heroCard && !prefersReducedMotion) {
     };
 
     heroCard.addEventListener("pointermove", (event) => {
+        if (event.pointerType && event.pointerType !== "mouse") return;
         const rect = heroCard.getBoundingClientRect();
         const x = (event.clientX - rect.left) / rect.width - 0.5;
         const y = (event.clientY - rect.top) / rect.height - 0.5;
