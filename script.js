@@ -3,6 +3,9 @@ console.log("Portfolio loaded");
 const yearEl = document.querySelector("[data-year]");
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+const contactForm = document.querySelector("[data-contact-form]");
+const contactStatus = document.querySelector("[data-contact-status]");
+
 const prefersReducedMotion = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
 
 const navToggle = document.querySelector(".nav-toggle");
@@ -12,6 +15,7 @@ const desktopNavLinks = document.querySelector(".nav-links");
 const drawerNavLinks = document.querySelector("[data-nav-drawer-links]");
 const modal = document.getElementById("contact-modal");
 let modalOpeners = Array.from(document.querySelectorAll("[data-modal-open]"));
+let navCloseEls = Array.from(document.querySelectorAll("[data-nav-close]"));
 
 window.addEventListener("DOMContentLoaded", () => {
     document.documentElement.classList.add("is-loaded");
@@ -26,10 +30,10 @@ if (desktopNavLinks && drawerNavLinks) {
     }
     drawerNavLinks.replaceChildren(fragment);
     modalOpeners = Array.from(document.querySelectorAll("[data-modal-open]"));
+    navCloseEls = Array.from(document.querySelectorAll("[data-nav-close]"));
 }
 
 const navLinks = Array.from(document.querySelectorAll(".nav-link[href^=\"#\"]"));
-let navCloseEls = Array.from(document.querySelectorAll("[data-nav-close]"));
 const sections = Array.from(document.querySelectorAll("main section[id]"));
 
 const setActive = (id) => {
@@ -279,6 +283,41 @@ if (revealEls.length && !prefersReducedMotion && "IntersectionObserver" in windo
 const initialHash = window.location.hash ? window.location.hash.slice(1) : "";
 if (initialHash) setActive(initialHash);
 else if (sections.length) setActive(sections[0].id);
+
+if (contactForm) {
+    const emailField = contactForm.querySelector("#contact-email");
+    const nextField = contactForm.querySelector("[data-contact-next]");
+    const replyToField = contactForm.querySelector("[data-contact-replyto]");
+    const submitButton = contactForm.querySelector("button[type=\"submit\"]");
+    const currentUrl = new URL(window.location.href);
+
+    if (nextField && currentUrl.protocol !== "file:") {
+        currentUrl.searchParams.set("contact", "success");
+        currentUrl.hash = "contact";
+        nextField.value = currentUrl.toString();
+    }
+
+    if (contactStatus) {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("contact") === "success") {
+            contactStatus.textContent = "Message sent successfully.";
+            params.delete("contact");
+            const cleanSearch = params.toString();
+            const cleanUrl = `${window.location.pathname}${cleanSearch ? `?${cleanSearch}` : ""}${window.location.hash}`;
+            window.history.replaceState({}, "", cleanUrl);
+        }
+    }
+
+    contactForm.addEventListener("submit", () => {
+        if (replyToField && emailField) replyToField.value = emailField.value.trim();
+
+        if (contactStatus) {
+            contactStatus.textContent = "Sending message...";
+        }
+
+        if (submitButton) submitButton.disabled = true;
+    });
+}
 
 if ("IntersectionObserver" in window && navLinks.length && sections.length) {
     const observer = new IntersectionObserver(
