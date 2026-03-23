@@ -34,7 +34,13 @@ if (desktopNavLinks && drawerNavLinks) {
 }
 
 const navLinks = Array.from(document.querySelectorAll(".nav-link[href^=\"#\"]"));
-const sections = Array.from(document.querySelectorAll("main section[id]"));
+const navTargetIds = new Set(
+    navLinks
+        .map((link) => link.getAttribute("href"))
+        .filter((href) => href && href.startsWith("#"))
+        .map((href) => href.slice(1))
+);
+const sections = Array.from(document.querySelectorAll("main section[id]")).filter((section) => navTargetIds.has(section.id));
 
 const setActive = (id) => {
     for (const link of navLinks) {
@@ -156,8 +162,8 @@ if (navToggle && navOverlay && navDrawer) {
         }
     });
 
-    if (window.matchMedia && window.matchMedia("(min-width: 761px)").addEventListener) {
-        window.matchMedia("(min-width: 761px)").addEventListener("change", (e) => {
+    if (window.matchMedia && window.matchMedia("(min-width: 901px)").addEventListener) {
+        window.matchMedia("(min-width: 901px)").addEventListener("change", (e) => {
             if (e.matches) closeNav();
         });
     }
@@ -281,7 +287,7 @@ if (revealEls.length && !prefersReducedMotion && "IntersectionObserver" in windo
 }
 
 const initialHash = window.location.hash ? window.location.hash.slice(1) : "";
-if (initialHash) setActive(initialHash);
+if (initialHash && navTargetIds.has(initialHash)) setActive(initialHash);
 else if (sections.length) setActive(sections[0].id);
 
 if (contactForm) {
