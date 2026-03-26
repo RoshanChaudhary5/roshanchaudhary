@@ -12,7 +12,7 @@ const prefersReducedMotion = window.matchMedia ? window.matchMedia("(prefers-red
 
 const navToggle = document.querySelector(".nav-toggle");
 const navOverlay = document.querySelector("[data-nav-overlay]");
-const navDrawer = document.getElementById("nav-drawer");
+const navDrawer = document.getElementById("nav-drawer"); 
 const desktopNavLinks = document.querySelector(".nav-links");
 const drawerNavLinks = document.querySelector("[data-nav-drawer-links]");
 const modal = document.getElementById("contact-modal");
