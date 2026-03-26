@@ -5,6 +5,8 @@ if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
 const contactForm = document.querySelector("[data-contact-form]");
 const contactStatus = document.querySelector("[data-contact-status]");
+const contactToast = document.querySelector("[data-contact-toast]");
+const contactToastClose = document.querySelector("[data-contact-toast-close]");
 
 const prefersReducedMotion = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
 
@@ -16,6 +18,7 @@ const drawerNavLinks = document.querySelector("[data-nav-drawer-links]");
 const modal = document.getElementById("contact-modal");
 let modalOpeners = Array.from(document.querySelectorAll("[data-modal-open]"));
 let navCloseEls = Array.from(document.querySelectorAll("[data-nav-close]"));
+let contactToastTimer = null;
 
 window.addEventListener("DOMContentLoaded", () => {
     document.documentElement.classList.add("is-loaded");
@@ -123,6 +126,37 @@ const getModalFocusable = () => {
         const style = window.getComputedStyle(el);
         return style.visibility !== "hidden" && style.display !== "none";
     });
+};
+
+const clearContactToastTimer = () => {
+    if (contactToastTimer) {
+        window.clearTimeout(contactToastTimer);
+        contactToastTimer = null;
+    }
+};
+
+const hideContactToast = () => {
+    if (!contactToast || contactToast.hidden) return;
+
+    clearContactToastTimer();
+    contactToast.classList.remove("is-visible");
+
+    window.setTimeout(() => {
+        if (!contactToast.classList.contains("is-visible")) {
+            contactToast.hidden = true;
+        }
+    }, 220);
+};
+
+const showContactToast = () => {
+    if (!contactToast) return;
+
+    clearContactToastTimer();
+    contactToast.hidden = false;
+    window.requestAnimationFrame(() => {
+        contactToast.classList.add("is-visible");
+    });
+    contactToastTimer = window.setTimeout(hideContactToast, 5000);
 };
 
 if (navToggle && navOverlay && navDrawer) {
@@ -239,6 +273,14 @@ if (modal) {
     });
 }
 
+if (contactToastClose) {
+    contactToastClose.addEventListener("click", hideContactToast);
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") hideContactToast();
+});
+
 const revealEls = Array.from(document.querySelectorAll(".reveal"));
 
 for (const el of revealEls) {
@@ -307,6 +349,7 @@ if (contactForm) {
         const params = new URLSearchParams(window.location.search);
         if (params.get("contact") === "success") {
             contactStatus.textContent = "Message sent successfully.";
+            showContactToast();
             params.delete("contact");
             const cleanSearch = params.toString();
             const cleanUrl = `${window.location.pathname}${cleanSearch ? `?${cleanSearch}` : ""}${window.location.hash}`;
