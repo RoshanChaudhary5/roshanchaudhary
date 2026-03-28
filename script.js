@@ -12,7 +12,7 @@ const prefersReducedMotion = window.matchMedia ? window.matchMedia("(prefers-red
 
 const navToggle = document.querySelector(".nav-toggle");
 const navOverlay = document.querySelector("[data-nav-overlay]");
-const navDrawer = document.getElementById("nav-drawer"); 
+const navDrawer = document.getElementById("nav-drawer");
 const desktopNavLinks = document.querySelector(".nav-links");
 const drawerNavLinks = document.querySelector("[data-nav-drawer-links]");
 const modal = document.getElementById("contact-modal");
@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 if (desktopNavLinks && drawerNavLinks) {
     const fragment = document.createDocumentFragment();
-    for (const link of desktopNavLinks.querySelectorAll("a[href^=\"#\"], button[data-modal-open]")) {
+    for (const link of desktopNavLinks.querySelectorAll("a, button[data-modal-open]")) {
         const clone = link.cloneNode(true);
         clone.setAttribute("data-nav-close", "");
         fragment.appendChild(clone);
@@ -44,6 +44,9 @@ const navTargetIds = new Set(
         .map((href) => href.slice(1))
 );
 const sections = Array.from(document.querySelectorAll("main section[id]")).filter((section) => navTargetIds.has(section.id));
+const skillFilterButtons = Array.from(document.querySelectorAll("[data-skill-filter]"));
+const skillPanels = Array.from(document.querySelectorAll("[data-skill-category]"));
+const skillGroups = document.querySelector("[data-skill-groups]");
 
 const setActive = (id) => {
     for (const link of navLinks) {
@@ -61,6 +64,38 @@ for (const link of navLinks) {
         if (!href || !href.startsWith("#")) return;
         setActive(href.slice(1));
     });
+}
+
+const setSkillFilter = (category) => {
+    for (const button of skillFilterButtons) {
+        const active = button.getAttribute("data-skill-filter") === category;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+    }
+
+    let visiblePanels = 0;
+
+    for (const panel of skillPanels) {
+        const matches = category === "all" || panel.getAttribute("data-skill-category") === category;
+        panel.hidden = !matches;
+        if (matches) visiblePanels += 1;
+    }
+
+    if (skillGroups) {
+        const filtered = category !== "all" && visiblePanels > 0;
+        skillGroups.classList.toggle("is-filtered", filtered);
+    }
+};
+
+if (skillFilterButtons.length && skillPanels.length) {
+    setSkillFilter("all");
+
+    for (const button of skillFilterButtons) {
+        button.addEventListener("click", () => {
+            const category = button.getAttribute("data-skill-filter") || "all";
+            setSkillFilter(category);
+        });
+    }
 }
 
 let navLastFocus = null;
