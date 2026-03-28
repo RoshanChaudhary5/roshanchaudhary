@@ -6,14 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Roshan Chaudhary - UI Designer and DevOps learner. Portfolio featuring skills and projects.">
+        content="Roshan Chaudhary - Full-stack developer and DevOps learner. Portfolio featuring skills, projects, and CV.">
 
     <script>
         document.documentElement.classList.add("js");
     </script>
 
     <title>Roshan Chaudhary | Developer</title>
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
     
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,15 +90,16 @@
     <header id="top" class="hero">
         <div class="container hero-grid">
             <div class="hero-copy" data-reveal-group="90">
-                <p>UI Designer | DevOps Learner</p>
+                <p>Full-stack Developer | DevOps Learner</p>
                 <h1 class="reveal">Roshan Chaudhary</h1>
                 <p class="lead reveal">
-                    Computer Science student passionate about UI/UX design, DevOps and cloud computing.
-                    I love building intelligent systems and scalable applications.
+                    BCA student passionate about full-stack web development, responsive design, DevOps, and cloud
+                    computing. I enjoy building intelligent systems and scalable applications.
                 </p>
 
                 <div class="hero-actions reveal">
-                    <a class="btn btn-primary" href="#projects">View Projects</a>
+                    <a class="btn btn-primary" href="cv.html">Open CV</a>
+                    
                     <a class="btn" href="#contact">Let's work together</a>
                 </div>
             </div>
@@ -122,8 +123,9 @@
                 <div class="about-card reveal">
                     <h2 class="reveal" data-delay="80">About Me</h2>
                     <p class="reveal" data-delay="160">
-                        I am a Computer Science student passionate about UI/UX Design, DevOps and Cloud computing.
-                        I love building intelligent systems and scalable applications.
+                        I am a Bachelor of Computer Applications student focused on full-stack development, responsive
+                        web design, DevOps, and cloud computing. I enjoy turning ideas into practical, reliable
+                        digital products.
                     </p>
                 </div>
             </div>
@@ -200,69 +202,138 @@
 
         <section id="skills" class="section">
             <div class="container">
-                <h2 class="reveal">Skills</h2>
-                <ul class="skill-grid" aria-label="Skills" data-reveal-group="70">
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
-                                alt="">
-                        </span>
-                        <span>C++</span>
-                    </li>
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-                                alt="">
-                        </span>
-                        <span>Python</span>
-                    </li>
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="">
-                        </span>
-                        <span>PHP</span>
-                    </li>
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                                alt="">
-                        </span>
-                        <span>JavaScript</span>
-                    </li>
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                                alt="">
-                        </span>
-                        <span>HTML</span>
-                    </li>
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="">
-                        </span>
-                        <span>CSS</span>
-                    </li>
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-                                alt="">
-                        </span>
-                        <span>Docker</span>
-                    </li>
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="img/aws-logo.svg" alt="AWS logo">
-                        </span>
-                        <span>AWS</span>
-                    </li>
-                    <li class="skill reveal">
-                        <span class="skill-logo" aria-hidden="true">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
-                                alt="">
-                        </span>
-                        <span>Linux</span>
-                    </li>
-                </ul>
+                <div class="skills-head" data-reveal-group="90">
+                    <p class="journey-eyebrow reveal">Skill Stack</p>
+                    <h2 class="reveal">Skills by focus area</h2>
+                    <p class="skills-intro reveal">
+                        I organize my work across frontend experiences, backend logic, cloud workflows, and
+                        supporting strengths that help me ship cleaner products.
+                    </p>
+                </div>
+
+                <div class="skills-filter" role="toolbar" aria-label="Filter skills by category"
+                    data-reveal-group="55">
+                    <button class="skill-filter-btn reveal is-active" type="button" data-skill-filter="all"
+                        aria-pressed="true">All</button>
+                    <button class="skill-filter-btn reveal" type="button" data-skill-filter="frontend"
+                        aria-pressed="false">Frontend</button>
+                    <button class="skill-filter-btn reveal" type="button" data-skill-filter="backend"
+                        aria-pressed="false">Backend</button>
+                    <button class="skill-filter-btn reveal" type="button" data-skill-filter="cloud-devops"
+                        aria-pressed="false">Cloud &amp; DevOps</button>
+                    <button class="skill-filter-btn reveal" type="button" data-skill-filter="other"
+                        aria-pressed="false">Other</button>
+                </div>
+
+                <div class="skill-groups" data-skill-groups data-reveal-group="90">
+                    <article class="skill-panel reveal" data-skill-category="frontend">
+                        <div class="skill-panel-head">
+                            <span class="skill-panel-label">Frontend</span>
+                            <p>Responsive interfaces focused on clarity, usability, and polished interactions.</p>
+                        </div>
+
+                        <ul class="skill-grid" aria-label="Frontend skills">
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                                        alt="">
+                                </span>
+                                <span>HTML</span>
+                            </li>
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                                        alt="">
+                                </span>
+                                <span>CSS</span>
+                            </li>
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                                        alt="">
+                                </span>
+                                <span>JavaScript</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="skill-panel skill-panel--compact reveal" data-skill-category="backend">
+                        <div class="skill-panel-head">
+                            <span class="skill-panel-label">Backend</span>
+                            <p>Server-side problem solving, application logic, and practical scripting.</p>
+                        </div>
+
+                        <ul class="skill-grid skill-grid--compact" aria-label="Backend skills">
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                                        alt="">
+                                </span>
+                                <span>Python</span>
+                            </li>
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.simpleicons.org/php/777BB4" alt="PHP logo">
+                                </span>
+                                <span>PHP</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="skill-panel reveal" data-skill-category="cloud-devops">
+                        <div class="skill-panel-head">
+                            <span class="skill-panel-label">Cloud &amp; DevOps</span>
+                            <p>Deployment-ready tools for infrastructure, automation, and reliable environments.</p>
+                        </div>
+
+                        <ul class="skill-grid" aria-label="Cloud and DevOps skills">
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                                        alt="">
+                                </span>
+                                <span>Docker</span>
+                            </li>
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="img/aws-logo.svg" alt="AWS logo">
+                                </span>
+                                <span>AWS</span>
+                            </li>
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+                                        alt="">
+                                </span>
+                                <span>Linux</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="skill-panel skill-panel--compact reveal" data-skill-category="other">
+                        <div class="skill-panel-head">
+                            <span class="skill-panel-label">Other</span>
+                            <p>Additional strengths that support design thinking and technical fundamentals.</p>
+                        </div>
+
+                        <ul class="skill-grid skill-grid--compact" aria-label="Other skills">
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+                                        alt="">
+                                </span>
+                                <span>C++</span>
+                            </li>
+                            <li class="skill">
+                                <span class="skill-logo" aria-hidden="true">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+                                        alt="">
+                                </span>
+                                <span>UI/UX Design</span>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
             </div>
         </section>
 
@@ -414,7 +485,7 @@
 
     <footer class="footer">
         <div class="container footer-row">
-            <p>&copy; <span data-year>2025</span> Roshan Chaudhary. All Rights Reserved.</p> <br>
+            <p>&copy; <span data-year>2025</span> Roshan Chaudhary. All Rights Reserved.</p>
             <a class="footer-link" href="privacy.html">Privacy Policy</a>
         </div>
     </footer>
